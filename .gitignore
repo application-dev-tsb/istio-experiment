@@ -1,4 +1,5 @@
 .terraform
+.terraform.lock.hcl
 .idea
 istio-experiment.iml
 terraform.tfstate*
