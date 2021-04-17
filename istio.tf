@@ -37,3 +37,23 @@ resource "helm_release" "istiod" {
 
   depends_on = [helm_release.istio_base]
 }
+
+resource "helm_release" "istio_ingress" {
+  provider        = helm.this_cluster
+  name            = "istio-ingress"
+  namespace       = local.istio_namespace
+  chart           = "${path.module}/istio-1.9.3/manifests/charts/gateways/istio-ingress"
+  cleanup_on_fail = true
+
+  depends_on = [helm_release.istiod]
+}
+
+resource "helm_release" "istio_egress" {
+  provider        = helm.this_cluster
+  name            = "istio-egress"
+  namespace       = local.istio_namespace
+  chart           = "${path.module}/istio-1.9.3/manifests/charts/gateways/istio-egress"
+  cleanup_on_fail = true
+
+  depends_on = [helm_release.istiod]
+}
